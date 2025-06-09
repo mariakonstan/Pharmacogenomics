@@ -1,0 +1,396 @@
+[
+    {
+        "name": "APOE", 
+        "attr": "NR",
+        "chrom": "chr19",
+        "start": 44905435,
+        "end": 44909752,
+        "accession": "NC_000019.10",
+        "file": "seq_APOE.txt",
+        "alleles": [
+            {
+                "name": "APOE Allele T",
+                "attr": "NR",
+                "tag": "rs429358",
+                "chrom": "chr19",
+                "pos": 44908684,
+                "base": "T",
+                "comments": "normal response to donepezil, galantamine and rivastigmine (wild type)" 
+            },
+            {
+                "name": "APOE Allele C",
+                "attr": "PR",
+                "tag": "rs429358",
+                "chrom": "chr19",
+                "pos": 44908684,
+                "base": "C",
+                "comments": "decreased response to donepezil, galantamine and rivastigmine" 
+            }
+        ]
+    },
+    {
+        "name": "BCHE", 
+        "attr": "NR",
+        "chrom": "chr3",
+        "start": 165766451,
+        "end": 165843874,
+        "accession": "NC_000003.12",
+        "file": "seq_BCHE.txt",
+        "alleles": [
+            {
+                "name": "BCHE Allele T",
+                "attr": "HR",
+                "tag": "rs1803274",
+                "chrom": "chr3",
+                "pos": 165773492,
+                "base": "T",
+                "comments": "increased response to donepezil" 
+            },
+            {
+                "name": "BCHE Allele A",
+                "attr": "NR",
+                "tag": "rs1803274",
+                "chrom": "chr3",
+                "pos": 165773492,
+                "base": "A",
+                "comments": "normal response to donepezil" 
+            },
+            {
+                "name": "BCHE Allele C",
+                "attr": "NR",
+                "tag": "rs1803274",
+                "chrom": "chr3",
+                "pos": 165773492,
+                "base": "C",
+                "comments": "normal response (wild type)" 
+            },
+            {
+                "name": "BCHE Allele G",
+                "attr": "NR",
+                "tag": "rs1803274",
+                "chrom": "chr3",
+                "pos": 165773492,
+                "base": "G",
+                "comments": "normal response" 
+            }
+        ]
+    },
+    {
+        "name": "CHAT", 
+        "attr": "NR",
+        "chrom": "chr10",
+        "start": 49603209,
+        "end": 49673826,
+        "accession": "NC_000010.11",
+        "file": "seq_CHAT.txt",
+        "alleles": [
+            {
+                "name": "CHAT Allele A",
+                "attr": "NR",
+                "tag": "rs2177370",
+                "chrom": "chr10",
+                "pos": 49630828          ,
+                "base": "A",
+                "comments": "normal response to donepezil, galantamine or rivastigmine (wild type)" 
+            },
+            {
+                "name": "CHAT Allele C",
+                "attr": "NR",
+                "tag": "rs2177370",
+                "chrom": "chr10",
+                "pos": 49630828,
+                "base": "C",
+                "comments": "normal response" 
+            },
+            {
+                "name": "CHAT Allele G",
+                "attr": "PR",
+                "tag": "rs2177370",
+                "chrom": "chr10",
+                "pos": 49630828,
+                "base": "G",
+                "comments": "poor response" 
+            },
+            {
+                "name": "CHAT Allele T",
+                "attr": "NR",
+                "tag": "rs2177370",
+                "chrom": "chr10",
+                "pos": 49630828,
+                "base": "T",
+                "comments": "normal response" 
+            },
+            {
+                "name": "CHAT(2) Allele A",
+                "attr": "PR",
+                "tag": "rs3793790",
+                "chrom": "chr10",
+                "pos": 49632690,
+                "base": "A",
+                "comments": "poor response to donepezil, galantamine or rivastigmine" 
+            },
+            {
+                "name": "CHAT(2) Allele C",
+                "attr": "NR",
+                "tag": "rs3793790",
+                "chrom": "chr10",
+                "pos": 49632690,
+                "base": "C",
+                "comments": "normal response to donepezil, galantamine or rivastigmine" 
+            },
+            {
+                "name": "CHAT(2) Allele G",
+                "attr": "NR",
+                "tag": "rs3793790",
+                "chrom": "chr10",
+                "pos": 49632690,
+                "base": "G",
+                "comments": "normal response to donepezil, galantamine or rivastigmine (wild type)" 
+            }
+        ]
+    },
+    {
+        "name": "CHRNA7", 
+        "attr": "NR",
+        "chrom": "chr15",
+        "start": 32016228,
+        "end": 32187271,
+        "accession": "NC_000015.10",
+        "file": "seq_CHRNA7.txt",
+        "alleles": [
+            {
+                "name": "CHRNA7 Allele T",
+                "attr": "HR",
+                "tag": "rs6494223",
+                "chrom": "chr15",
+                "pos": 32104256,
+                "base": "T",
+                "comments": "increased response to donepezil, galantamine and rivastigmine" 
+            },
+            {
+                "name": "CHRNA7 Allele G",
+                "attr": "NR",
+                "tag": "rs6494223",
+                "chrom": "chr15",
+                "pos": 32104256,
+                "base": "G",
+                "comments": "normal response" 
+            },
+            {
+                "name": "CHRNA7 Allele C",
+                "attr": "NR",
+                "tag": "rs6494223",
+                "chrom": "chr15",
+                "pos": 32104256,
+                "base": "C",
+                "comments": "normal response (wild type)" 
+            }
+        ]
+    },
+    {
+        "name": "CYP2D6", 
+        "attr": "NR",
+        "chrom": "chr22",
+        "start": 42126067,
+        "end": 42131240,
+        "accession": "NC_000022.11",
+        "file": "seq_CYP2D6.txt",
+        "alleles": [
+            {
+                "name": "CYP2D6 Allele A",
+                "attr": "NM",
+                "tag": "rs3892097",
+                "chrom": "chr22",
+                "pos": 42128945,
+                "base": "A",
+                "comments": "normal metabolizer" 
+            },
+            {
+                "name": "CYP2D6 Allele C",
+                "attr": "NM",
+                "tag": "rs3892097",
+                "chrom": "chr22",
+                "pos": 42128945,
+                "base": "C",
+                "comments": "normal metabolizer (wild type)" 
+            },
+            {
+                "name": "CYP2D6 Allele G",
+                "attr": "NM",
+                "tag": "rs3892097",
+                "chrom": "chr22",
+                "pos": 42128945,
+                "base": "G",
+                "comments": "normal metabolizer" 
+            },
+            {
+                "name": "CYP2D6 Allele T",
+                "attr": "PM",
+                "tag": "rs3892097",
+                "chrom": "chr22",
+                "pos": 42128945,
+                "base": "T",
+                "comments": "poor metabolizer" 
+            },
+            {
+                "name": "CYP2D6(2) Allele C",
+                "attr": "NM",
+                "tag": "rs1065852",
+                "chrom": "chr22",
+                "pos": 42130692,
+                "base": "C",
+                "comments": "normal metabolizer (wild type)" 
+            },
+            {
+                "name": "CYP2D6(2) Allele G",
+                "attr": "NM",
+                "tag": "rs1065852",
+                "chrom": "chr22",
+                "pos": 42130692,
+                "base": "G",
+                "comments": "normal metabolizer" 
+            },
+            {
+                "name": "CYP2D6(2) Allele A",
+                "attr": "PM",
+                "tag": "rs1065852",
+                "chrom": "chr22",
+                "pos": 42130692,
+                "base": "A",
+                "comments": "poor metabolizer" 
+            },
+            {
+                "name": "CYP2D6(3) Allele A",
+                "attr": "PM",
+                "tag": "rs16947",
+                "chrom": "chr22",
+                "pos": 42127941,
+                "base": "A",
+                "comments": "poor metabolizer" 
+            },
+            {
+                "name": "CYP2D6(3) Allele C",
+                "attr": "NM",
+                "tag": "rs16947",
+                "chrom": "chr22",
+                "pos": 42127941,
+                "base": "C",
+                "comments": "normal metabolizer" 
+            },
+            {
+                "name": "CYP2D6(3) Allele G",
+                "attr": "NM",
+                "tag": "rs16947",
+                "chrom": "chr22",
+                "pos": 42127941,
+                "base": "G",
+                "comments": "normal metabolizer (wild type)" 
+            },
+            {
+                "name": "CYP2D6(3) Allele T",
+                "attr": "NM",
+                "tag": "rs16947",
+                "chrom": "chr22",
+                "pos": 42127941,
+                "base": "T",
+                "comments": "normal metabolizer" 
+            }
+        ]
+    },
+    {
+        "name": "KCNE1", 
+        "attr": "NR",
+        "chrom": "chr21",
+        "start": 34440135,
+        "end": 34518761,
+        "accession": "NC_000021.9",
+        "file": "seq_KCNE1.txt",
+        "alleles": [
+            {
+                "name": "KCNE1 Allele C",
+                "attr": "NR",
+                "tag": "rs1805128",
+                "chrom": "chr21",
+                "pos": 34449382,
+                "base": "C",
+                "comments": "normal response (wild type)" 
+            },
+            {
+                "name": "KCNE1 Allele T",
+                "attr": "XX",
+                "tag": "rs1805128",
+                "chrom": "chr21",
+                "pos": 34449382,
+                "base": "T",
+                "comments": "increased likelihood of Acquired Long QT Syndrome (aLQTS) when treated with donepezil" 
+            }
+        ]
+    },
+    {
+        "name": "LINC02343", 
+        "attr": "NR",
+        "chrom": "chr13",
+        "start": 34321218,
+        "end": 34643116,
+        "accession": "NC_000013.11",
+        "file": "seq_LINC02343.txt",
+        "alleles": [
+            {
+                "name": "LINC02343 Allele C",
+                "attr": "NR",
+                "tag": "rs17798800",
+                "chrom": "chr13",
+                "pos": 34376390,
+                "base": "C",
+                "comments": "normal response to donepezil, galantamine and rivastigmine (wild type)" 
+            },
+            {
+                "name": "LINC02343 Allele T",
+                "attr": "PR",
+                "tag": "rs17798800",
+                "chrom": "chr13",
+                "pos": 34376390,
+                "base": "T",
+                "comments": "decreased response to donepezil, galantamine and rivastigmine" 
+            }
+        ]
+    },
+    {
+        "name": "PRKCE", 
+        "attr": "NR",
+        "chrom": "chr2",
+        "start":  45597607,
+        "end":  46241660,
+        "accession": "NC_000002.12",
+        "file": "seq_PRKCE.txt",
+        "alleles": [
+            {
+                "name": "PRKCE Allele T",
+                "attr": "NR",
+                "tag": "rs6720975",
+                "chrom": "chr2",
+                "pos": 45797073,
+                "base": "T",
+                "comments": "normal response to donepezil, galantamine and rivastigmine (wild type)" 
+            },
+            {
+                "name": "PRKCE Allele A",
+                "attr": "NR",
+                "tag": "rs6720975",
+                "chrom": "chr2",
+                "pos": 45797073,
+                "base": "A",
+                "comments": "normal response" 
+            },
+            {
+                "name": "PRKCE Allele C",
+                "attr": "PR",
+                "tag": "rs6720975",
+                "chrom": "chr2",
+                "pos": 45797073,
+                "base": "C",
+                "comments": "poor response" 
+            }
+        ]
+    }
+]    
