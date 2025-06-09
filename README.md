@@ -1,4 +1,4 @@
-# genedb
+# Pharmacogenomics
 WGS scanning tool
 
 ## Requirements
