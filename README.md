@@ -87,3 +87,9 @@ pip install -r requirements.txt
 ```bash
 python3 scan.py
 ```
+
+## Post-Processing
+- Generate csv files and plots:
+```bash
+python3 process.py
+```
