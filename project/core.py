@@ -242,29 +242,9 @@ class SampleScanner:
         self.gene_groups = {}
         self.limit = 0 # sample scan limit (for debug)
         self.start = 0 # index to continue from (on scan broken)
-
-    @staticmethod    
-    def read_sample_matches(file_path):
-        sample_matches = {}
-        with open(file_path, 'r', encoding='utf-8') as f:
-            sample_data = json.load(f)
-            for entry in sample_data:
-                match = None
-                key = entry.get("gene", "")
-                entry_match = entry.get("match", {})
-                if len(entry_match):
-                    match = Match(
-                        sample_id=entry_match.get("sample_id", ""),
-                        sample_pop=entry_match.get("sample_population", ""),
-                        gene_name=entry_match.get("gene_name", ""),
-                        match_type=entry_match.get("match_type", ""),
-                        score=entry_match.get("score", 0)
-                    )
-                sample_matches[key] = match
-        return sample_matches
     
     @staticmethod    
-    def read_sample_matches_lite(file_path):
+    def read_sample_matches(file_path):
         sample_matches = {}
         with open(file_path, 'r', encoding='utf-8') as f:
             match_data = json.load(f)
@@ -328,12 +308,8 @@ class SampleScanner:
         try:
             for gene in sample_genes:
                 gene.query_sample(sample, self.ref_fasta_file)
-                summary = gene.summarize()
-                sample_summaries.append(summary)
-                """ TODO: export gene-match dict only instead of gene-summary
                 if gene.match:
                     sample_summaries.append(gene.match.to_dict())
-                """
                 sample_result[gene.name] = gene.match.score if gene.match else 0
         except Exception as e:
             logger.error(f"Error processing {sample_name}: {e}")
@@ -410,10 +386,57 @@ class SampleScanner:
                     logger.error(f"Error processing sample in parallel: {e}")
     
     def export_summaries(self):
-        total_summary = []
         group_summaries = {}
+        total_summary = []
+        total_responses = []
+        total_metabolizers = []
+        
+        def get_group_entries_dataframe(group_entries:dict):
+            data = []
+            for key, entry in group_entries.items():
+                data.append({
+                    "Group": key,
+                    "Response": entry.get("Response", ""),
+                    "Metabolizer": entry.get("Metabolizer", ""),
+                    "Side-Effects": entry.get("Side-Effects", ""),
+                    "Genotype": entry.get("Genotype", "")
+                })
+            return pd.DataFrame(data)
+
+        def classify_by_priority(df, column, dominant_genes, dominant_value, priority_order):
+            if dominant_genes:
+                # Filter only rows where Group starts with one of the dominant genes
+                df_rows = df[df["Group"].str.startswith(dominant_genes)]
+                # Check for dominant value
+                if (df_rows[column] == dominant_value).any():
+                    return dominant_value
+        
+            # Count values excluding NaNs
+            counts = df[column].dropna().value_counts()
+            if counts.empty:
+                return ""
+        
+            # Find the max count
+            max_count = max(counts.values)
+            # Get all values that have the max count
+            max_values = [val for val, count in counts.items() if count == max_count]
+        
+            # Resolve tie using priority order
+            for val in priority_order:
+                if val in max_values:
+                    return val
+                    
+            return max_values[0]
+
+        def classify_response(df, dominant_genes=()):
+            return classify_by_priority(df, "Response", dominant_genes, "PR", ["PR", "HR", "NR"])
+        
+        def classify_metabolizer(df, dominant_genes=()):
+            return classify_by_priority(df, "Metabolizer", dominant_genes, "PM", ["PM", "HM", "NM"])
+        
         for tag, group in self.gene_groups.items():
-            group_summaries[tag] = []
+            key = f"{group.gene.name}_{tag}"
+            group_summaries[key] = []
             
         df = pd.read_csv(self.index_file, sep="\t")
         
@@ -423,24 +446,39 @@ class SampleScanner:
                 sample_name = os.path.splitext(filename)[0]
                 pop = df.loc[df["SAMPLE_NAME"] == sample_name, "POPULATION"].values
                 population = pop[0] if pop.size > 0 else ""
+                group_entries = {}
                 
                 file_path = os.path.join(folder_path, filename)
                 sample_matches = SampleScanner.read_sample_matches(file_path)
                 
                 # add total summary entry
-                sample_entry = {"Sample": sample_name, "Population": population}
-                for key, match in sample_matches.items():
-                    sample_entry[key] = match.score if match else 0
-                total_summary.append(sample_entry)
+                sample_entry = {
+                    "Sample": sample_name, 
+                    "Population": population,
+                    "Response": "",
+                    "Metabolizer": "", 
+                    "Side-Effects": 0,
+                }
+                response_entry = {
+                    "Sample": sample_name, 
+                    "Population": population,
+                }
+                metabolizer_entry = {
+                    "Sample": sample_name, 
+                    "Population": population,
+                }
                 
                 # update gene_data matches for this sample
                 for gene in self.gene_data:
-                    gene.match = sample_matches.get(gene.name, None)
+                    match = sample_matches.get(gene.name, None)
+                    sample_entry[gene.name] = match.score if match else 0
+                    gene.match = match 
                     if gene.type == GeneType.GENE and gene.match is None:
-                        logger.warning(f"{sample_name} - Gene: {gene.name}: Gene match not found!")
+                        logger.warning(f"{sample_name} ({gene.name}): Gene match not found!")
                         
                 # add group-summaries entry
                 for tag, group in self.gene_groups.items():
+                    key = f"{group.gene.name}_{tag}"
                     group_entry = {"Sample": sample_name, "Population": population}
                     alleles_found = {}
                     genotype = ""
@@ -452,17 +490,20 @@ class SampleScanner:
                     for allele in group.alleles:
                         score = allele.match.score if allele.match else 0
                         group_entry[allele.name] = score
-                
-                        if score > 0.3:
-                            alleles_found[allele.seq] = allele
-                            if allele.attr == "XX":
-                                side_effects = 1
+                        
+                        if score < 0.3:
+                            continue
+                            
+                        alleles_found[allele.seq] = allele
+                        if allele.attr == "XX":
+                            sample_entry["Side-Effects"] += 1
+                            side_effects += 1
                 
                     num_alleles = len(alleles_found)
                 
                     # Handle cases based on how many alleles passed the score threshold
                     if num_alleles == 0:
-                        logger.warning(f"{sample_name} - Gene: {group.gene.name} ({tag}): Allele match not found!")
+                        logger.warning(f"{sample_name} ({key}): Allele match not found!")
                     elif num_alleles == 1:
                         seq, allele = next(iter(alleles_found.items()))
                         genotype = seq * 2
@@ -500,25 +541,44 @@ class SampleScanner:
                         elif dom_allele.attr.endswith("R"):
                             response = dom_allele.attr
                     else:
-                        logger.warning(f"{sample_name} - Gene: {group.gene.name} ({tag}): More than 2 alleles found!")
+                        logger.warning(f"{sample_name} ({key}): More than 2 alleles found!")
 
                     group_entry["Genotype"] = genotype 
                     group_entry["Response"] = response 
                     group_entry["Metabolizer"] = metabolizer 
                     group_entry["Side-Effects"] = side_effects 
-                    group_summaries[tag].append(group_entry)
+                    group_summaries[key].append(group_entry)
+                    group_entries[key] = group_entry
+                    response_entry[key] = response
+                    metabolizer_entry[key] = metabolizer
+                    
+                sum_df = get_group_entries_dataframe(group_entries)
+                sample_entry["Response"] = classify_response(sum_df, ("APOE"))
+                sample_entry["Metabolizer"] = classify_metabolizer(sum_df, ("CYP2D6"))
+                
+                total_summary.append(sample_entry)
+                total_responses.append(response_entry)
+                total_metabolizers.append(metabolizer_entry)
         
-        for tag, group_summary in group_summaries.items():
-            self.export_csv(group_summary, f"summary_{tag}")
+        for key, group_summary in group_summaries.items():
+            self.export_csv(group_summary, f"summary_{key}")
         self.export_csv(total_summary, "summary_total")
+        self.export_csv(total_responses, "summary_responses")
+        self.export_csv(total_metabolizers, "summary_metabolizers")
     
     def plot_figures(self):
         fig_dir = self.output_dir_figures
+        
         df = pd.read_csv(os.path.join(self.output_dir, "summary_total.csv"))
-        utils.plot_gene_match_distribution(df, os.path.join(fig_dir, "fig_gene_distr.png"))
-        utils.plot_gene_match_by_population(df, os.path.join(fig_dir, "fig_gene_pop.png"))
-        utils.plot_allele_match_by_population(df, os.path.join(fig_dir, "fig_allele_pop.png"))
-        utils.plot_allele_match_corr_matrix(df, os.path.join(fig_dir, "fig_allele_corr.png"))
-        utils.plot_allele_heatmap(df, os.path.join(fig_dir, "fig_allele_heat.png"))
-        utils.plot_genetic_profile_PCA(df, os.path.join(fig_dir, "fig_genetic_profile.png"))
-        utils.plot_total_match_distribution(df, os.path.join(fig_dir, "fig_total_distr.png"))
+        utils.plot_total_summary(df, fig_dir, "total")
+        
+        skip_tags = ["total", "metabolizers", "responses"]
+        for filename in os.listdir(self.output_dir):
+            if filename == "summary_total.csv":
+                continue
+            if filename.startswith("summary_") and filename.endswith('.csv'):
+                tag = os.path.splitext(filename)[0].removeprefix("summary_")
+                if tag in skip_tags:
+                    continue
+                df = pd.read_csv(os.path.join(self.output_dir, filename))
+                utils.plot_per_gene_summary(df, fig_dir, tag)

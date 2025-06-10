@@ -11,7 +11,7 @@ def main():
     scanner.output_dir_figures = settings.OUTPUT_DIR_FIGURES
     scanner.load_gene_data()
     scanner.export_summaries()
-    # scanner.plot_figures()
+    scanner.plot_figures()
     
     
 if __name__ == "__main__":

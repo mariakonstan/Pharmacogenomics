@@ -1,3 +1,4 @@
+import os
 import time
 import pysam
 import logging
@@ -92,70 +93,58 @@ def safe_open_alignment(url, ref_fasta, mode="rc", retries=3, delay=2):
             return safe_open_alignment(url, ref_fasta, mode, retries-1, delay)
         
 
-def plot_gene_match_distribution(df, save_path=None):
+def plot_total_summary(df, output_dir, folder=None):
+    
+    cols_skipped = ["Sample", "Population", "Response", "Metabolizer", "Side-Effects"]
+    dir = os.path.join(output_dir, folder) if folder else output_dir
+    os.makedirs(dir, exist_ok=True)
+    
+    allele_cols = [col for col in df.columns if "Allele" in col]
+    gene_cols = [col for col in df.columns if not "Allele" in col and col not in cols_skipped]
+    
+    df_melted = df.melt(id_vars=["Sample", "Population"], value_vars=gene_cols, var_name="Gene", value_name="Match Score")
+    df_allele = df.set_index("Sample")[allele_cols]
+    
     """
     For each gene, visualize the distribution of the total gene match scores.
     Use: Spot genes with generally high or low confidence.
     """
-    genes = [col for col in df.columns if not "Allele" in col and col not in ["Sample", "Population"]]
-    df_melted = df.melt(id_vars=["Sample", "Population"], value_vars=genes, var_name="Gene", value_name="Match Score")
     plt.figure(figsize=(12, 6))
     sns.stripplot(data=df_melted, x="Gene", y="Match Score", jitter=True, size=2)
     plt.xticks(rotation=45)
     plt.title("Gene Match Score Distribution Across Samples")
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_allele_heatmap(df, save_path=None):
+    plt.savefig(f"{dir}/gene_match_distr.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
     A heatmap of all allele scores for each sample.
     Use: Spot outliers or patterns in allele-level match strengths.    
     """
-    allele_cols = [col for col in df.columns if "Allele" in col]
-    allele_df = df.set_index("Sample")[allele_cols]
     plt.figure(figsize=(18, 10))
-    sns.heatmap(allele_df, cmap="viridis", cbar_kws={'label': 'Match Score'})
+    sns.heatmap(df_allele, cmap="viridis", cbar_kws={'label': 'Match Score'})
     plt.title("Allele Match Scores per Sample")
     plt.xlabel("Alleles")
     plt.ylabel("Samples")
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_gene_match_by_population(df, save_path=None):
+    plt.savefig(f"{dir}/allele_heatmap.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
-    Mean gene scores across populations.
-    Use: Identify if certain genes are less well-matched in certain populations.
+    Compare how  gene match scores differ across populations.
+    Use: Identify population-specific gene score trends.
     """
-    genes = [col for col in df.columns if not "Allele" in col and col not in ["Sample", "Population"]]
-    df_melted = df.melt(id_vars=["Sample", "Population"], value_vars=genes, var_name="Gene", value_name="Match Score")
-    plt.figure(figsize=(12, 6))
-    sns.swarmplot(data=df_melted, x='Gene', y='Match Score', hue="Population", size=2)
-    plt.title("Gene Match Scores by Population")
-    plt.xticks(rotation=45)
+    grouped = df.groupby("Population")[gene_cols].mean().T
+    grouped.plot(kind="bar", figsize=(18, 8), width=0.8)
+    plt.title("Mean Gene Match Scores by Population")
+    plt.ylabel("Average Match Score")
+    plt.xlabel("Genes")
+    plt.xticks(rotation=90)
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_allele_match_by_population(df, save_path=None):
+    plt.savefig(f"{dir}/gene_match_by_pop.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
     Compare how allele match scores differ across populations.
     Use: Identify population-specific allele score trends.
     """
-    allele_cols = [col for col in df.columns if "Allele" in col]
     grouped = df.groupby("Population")[allele_cols].mean().T
     grouped.plot(kind="bar", figsize=(18, 8), width=0.8)
     plt.title("Mean Allele Match Scores by Population")
@@ -163,19 +152,13 @@ def plot_allele_match_by_population(df, save_path=None):
     plt.xlabel("Alleles")
     plt.xticks(rotation=90)
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_genetic_profile_PCA(df, save_path=None):
+    plt.savefig(f"{dir}/allele_match_by_pop.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
     Reduce dimensionality of all match scores to see sample clustering.
     Use: Detect whether samples group by population.
     """
-    features = df.drop(columns=["Sample", "Population"])
+    features = df.drop(columns=cols_skipped)
     scaled = StandardScaler().fit_transform(features)
     
     pca = PCA(n_components=2)
@@ -187,47 +170,90 @@ def plot_genetic_profile_PCA(df, save_path=None):
     sns.scatterplot(data=pca_df, x="PC1", y="PC2", hue="Population")
     plt.title("PCA of Sample Genetic Profiles")
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_allele_match_corr_matrix(df, save_path=None):
+    plt.savefig(f"{dir}/genetic_profile_PCA.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
     Correlation between allele scores across all samples.
     Use: See which alleles tend to co-occur or behave similarly.
     """    
-    allele_cols = [col for col in df.columns if "Allele" in col]
     allele_corr = df[allele_cols].corr()
     plt.figure(figsize=(14, 12))
     sns.heatmap(allele_corr, cmap="coolwarm", center=0, annot=False)
     plt.title("Correlation Matrix of Allele Match Scores")
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
-
-
-def plot_total_match_distribution(df, save_path=None):
+    plt.savefig(f"{dir}/corr_matrix.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
     """
     Total match score per sample across all genes.
     Use: Flag samples with generally low match quality (outlier detection).
     """
-    genes = [col for col in df.columns if not "Allele" in col and col not in ["Sample", "Population"]]
-    df["Total_Match"] = df[genes].sum(axis=1)
+    df["Total_Match"] = df[gene_cols].sum(axis=1)
     plt.figure(figsize=(10, 5))
     sns.histplot(df["Total_Match"], bins=30)
     plt.title("Distribution of Total Match Scores per Sample")
     plt.xlabel("Total Match Score")
     plt.ylabel("Sample Count")
     plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches="tight")  
-        plt.close()  
-    else:
-        plt.show()
+    plt.savefig(f"{dir}/score_sums_distr.png", dpi=300, bbox_inches="tight")  
+    plt.close()  
+
+    logger.info(f"Plots saved to: {dir}/")
+
+
+def plot_per_gene_summary(df, output_dir, tag):
+    """
+    Specific Allele set plots
+    """
+    dir = os.path.join(output_dir, tag)
+    os.makedirs(dir, exist_ok=True)
+
+    # Detect allele columns
+    allele_cols = [col for col in df.columns if "Allele" in col]
+    
+    # 1. Allele Frequency Distribution
+    plt.figure(figsize=(10, 5))
+    df[allele_cols].mean().plot(kind='bar', color='steelblue')
+    plt.title(f"{tag} - Allele Frequency Distribution")
+    plt.ylabel("Mean Match Score")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()
+    plt.savefig(f"{dir}/allele_freq.png")
+    plt.close()
+
+    # 2. Genotype Distribution
+    plt.figure(figsize=(8, 5))
+    df['Genotype'].value_counts().plot(kind='bar', color='orchid')
+    plt.title(f"{tag} - Genotype Distribution")
+    plt.ylabel("Sample Count")
+    plt.xlabel("Genotype")
+    plt.tight_layout()
+    plt.savefig(f"{dir}/genotype_distribution.png")
+    plt.close()
+
+    # 3. Combined Phenotype Bar Plot
+    phenotypes = {
+        "Metabolizer": df["Metabolizer"].value_counts(),
+        "Response": df["Response"].value_counts(),
+        "Side-Effects": df["Side-Effects"].map({1: "Yes"}).dropna().value_counts()
+    }
+    phenotype_df = pd.DataFrame(phenotypes).fillna(0).astype(int)
+
+    phenotype_df.plot(kind='bar', figsize=(10, 6), color=["#4daf4a", "#377eb8", "#e41a1c"])
+    plt.title(f"{tag} - Phenotype Summary")
+    plt.ylabel("Sample Count")
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.savefig(f"{dir}/phenotype_summary.png")
+    plt.close()
+
+    # 4. Allele Score Heatmap
+    plt.figure(figsize=(12, min(0.3 * len(df), 10)))
+    sns.heatmap(df[allele_cols], cmap="viridis", yticklabels=False)
+    plt.title(f"{tag} - Allele Match Score Heatmap")
+    plt.tight_layout()
+    plt.savefig(f"{dir}/heatmap.png")
+    plt.close()
+
+    logger.info(f"Plots saved to: {dir}/")
+
         

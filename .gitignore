@@ -4,8 +4,10 @@ __pycache__/
 *$py.class
 
 # Exclude data files
-results/*.csv
 data/sequences/*.txt
+results/samples/*
+results/*.csv
+R/data/*
 fasta/*
 tmp/
 *.cram

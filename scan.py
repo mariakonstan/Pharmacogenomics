@@ -20,7 +20,7 @@ def main():
         scanner.run_parallel(max_workers=settings.RUN_PARALLEL_WORKERS)
     else:
         scanner.run()
-    
+
     
 if __name__ == "__main__":
     main()
