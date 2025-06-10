@@ -1,0 +1,156 @@
+[
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "APOE",
+    "match_type": "gene",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "APOE Allele T",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "BCHE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9986
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "BCHE Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHAT",
+    "match_type": "gene_fuzzy",
+    "score": 0.9987
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHAT Allele A",
+    "match_type": "allele",
+    "score": 0.4333
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHAT Allele G",
+    "match_type": "allele",
+    "score": 0.5667
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHAT(2) Allele A",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHRNA7",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9977
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHRNA7 Allele T",
+    "match_type": "allele",
+    "score": 0.4828
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CHRNA7 Allele C",
+    "match_type": "allele",
+    "score": 0.5172
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CYP2D6",
+    "match_type": "gene_fuzzy",
+    "score": 0.9998
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CYP2D6 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CYP2D6(2) Allele G",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "CYP2D6(3) Allele G",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "KCNE1",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9991
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "KCNE1 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "LINC02343",
+    "match_type": "gene_fuzzy",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "LINC02343 Allele C",
+    "match_type": "allele",
+    "score": 0.6176
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "LINC02343 Allele T",
+    "match_type": "allele",
+    "score": 0.3824
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "PRKCE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9989
+  },
+  {
+    "sample_id": "NA20754",
+    "sample_population": "TSI",
+    "gene_name": "PRKCE Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  }
+]

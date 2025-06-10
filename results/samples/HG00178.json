@@ -1,0 +1,163 @@
+[
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "APOE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9993
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "APOE Allele T",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "BCHE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9985
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "BCHE Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHAT",
+    "match_type": "gene_fuzzy",
+    "score": 0.9987
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHAT Allele A",
+    "match_type": "allele",
+    "score": 0.5185
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHAT Allele G",
+    "match_type": "allele",
+    "score": 0.4815
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHAT(2) Allele A",
+    "match_type": "allele",
+    "score": 0.4884
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHAT(2) Allele G",
+    "match_type": "allele",
+    "score": 0.5116
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHRNA7",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9974
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHRNA7 Allele T",
+    "match_type": "allele",
+    "score": 0.5217
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CHRNA7 Allele C",
+    "match_type": "allele",
+    "score": 0.4783
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CYP2D6",
+    "match_type": "gene",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CYP2D6 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CYP2D6(2) Allele G",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "CYP2D6(3) Allele G",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "KCNE1",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9989
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "KCNE1 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "LINC02343",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "LINC02343 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "PRKCE",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.999
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "PRKCE Allele T",
+    "match_type": "allele",
+    "score": 0.5714
+  },
+  {
+    "sample_id": "HG00178",
+    "sample_population": "FIN",
+    "gene_name": "PRKCE Allele C",
+    "match_type": "allele",
+    "score": 0.4286
+  }
+]

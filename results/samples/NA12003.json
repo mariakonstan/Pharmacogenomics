@@ -1,0 +1,191 @@
+[
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "APOE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9995
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "APOE Allele T",
+    "match_type": "allele",
+    "score": 0.4359
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "APOE Allele C",
+    "match_type": "allele",
+    "score": 0.5641
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "BCHE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9985
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "BCHE Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHAT",
+    "match_type": "gene_fuzzy",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHAT Allele A",
+    "match_type": "allele",
+    "score": 0.6857
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHAT Allele G",
+    "match_type": "allele",
+    "score": 0.3143
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHAT(2) Allele A",
+    "match_type": "allele",
+    "score": 0.5405
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHAT(2) Allele G",
+    "match_type": "allele",
+    "score": 0.4595
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHRNA7",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.998
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHRNA7 Allele T",
+    "match_type": "allele",
+    "score": 0.4516
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CHRNA7 Allele C",
+    "match_type": "allele",
+    "score": 0.5484
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6",
+    "match_type": "gene_fuzzy",
+    "score": 0.9979
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6 Allele C",
+    "match_type": "allele",
+    "score": 0.52
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6 Allele T",
+    "match_type": "allele",
+    "score": 0.48
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6(2) Allele G",
+    "match_type": "allele",
+    "score": 0.4222
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6(2) Allele A",
+    "match_type": "allele",
+    "score": 0.5778
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6(3) Allele A",
+    "match_type": "allele",
+    "score": 0.3404
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "CYP2D6(3) Allele G",
+    "match_type": "allele",
+    "score": 0.6596
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "KCNE1",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9987
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "KCNE1 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "LINC02343",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "LINC02343 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "PRKCE",
+    "match_type": "gene_fuzzy",
+    "score": 0.999
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "PRKCE Allele T",
+    "match_type": "allele",
+    "score": 0.6
+  },
+  {
+    "sample_id": "NA12003",
+    "sample_population": "CEU",
+    "gene_name": "PRKCE Allele C",
+    "match_type": "allele",
+    "score": 0.4
+  }
+]

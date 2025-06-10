@@ -1,0 +1,163 @@
+[
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "APOE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9995
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "APOE Allele T",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "BCHE",
+    "match_type": "gene_fuzzy",
+    "score": 0.9991
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "BCHE Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHAT",
+    "match_type": "gene_fuzzy",
+    "score": 0.9987
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHAT Allele A",
+    "match_type": "allele",
+    "score": 0.5789
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHAT Allele G",
+    "match_type": "allele",
+    "score": 0.4211
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHAT(2) Allele A",
+    "match_type": "allele",
+    "score": 0.4595
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHAT(2) Allele G",
+    "match_type": "allele",
+    "score": 0.5405
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHRNA7",
+    "match_type": "gene_fuzzy",
+    "score": 0.9989
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHRNA7 Allele T",
+    "match_type": "allele",
+    "score": 0.5333
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CHRNA7 Allele C",
+    "match_type": "allele",
+    "score": 0.4667
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CYP2D6",
+    "match_type": "gene_fuzzy",
+    "score": 0.9963
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CYP2D6 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CYP2D6(2) Allele G",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "CYP2D6(3) Allele A",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "KCNE1",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9954
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "KCNE1 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "LINC02343",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "LINC02343 Allele C",
+    "match_type": "allele",
+    "score": 1.0
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "PRKCE",
+    "match_type": "gene_fuzzy_indel",
+    "score": 0.9988
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "PRKCE Allele T",
+    "match_type": "allele",
+    "score": 0.4167
+  },
+  {
+    "sample_id": "NA21114",
+    "sample_population": "GIH",
+    "gene_name": "PRKCE Allele C",
+    "match_type": "allele",
+    "score": 0.5833
+  }
+]

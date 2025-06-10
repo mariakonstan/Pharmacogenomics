@@ -5,7 +5,6 @@ __pycache__/
 
 # Exclude data files
 data/sequences/*.txt
-results/samples/*
 results/*.csv
 R/data/*
 fasta/*
