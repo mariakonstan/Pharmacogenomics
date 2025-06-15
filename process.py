@@ -4,8 +4,9 @@ from project.core import SampleScanner
 
 def main():
     scanner = SampleScanner()
-    scanner.genes_json = settings.GENES_JSON
     scanner.index_file = settings.SAMPLE_INDEX
+    scanner.genes_json = settings.GENES_JSON
+    scanner.pops_json = settings.POPULATIONS_JSON
     scanner.output_dir = settings.OUTPUT_DIR
     scanner.output_dir_samples = settings.OUTPUT_DIR_SAMPLES
     scanner.output_dir_figures = settings.OUTPUT_DIR_FIGURES

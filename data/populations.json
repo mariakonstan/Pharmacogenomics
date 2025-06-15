@@ -1,0 +1,32 @@
+{
+    "ACB": "Africa",
+    "ASW": "Africa",
+    "ESN": "Africa",
+    "GWD": "Africa",
+    "LWK": "Africa",
+    "MSL": "Africa",
+    "YRI": "Africa",
+
+    "CLM": "Americas",
+    "MXL": "Americas",
+    "PEL": "Americas",
+    "PUR": "Americas",
+
+    "CEU": "Europe",
+    "FIN": "Europe",
+    "GBR": "Europe",
+    "IBS": "Europe",
+    "TSI": "Europe",
+
+    "CDX": "East Asia",
+    "CHB": "East Asia",
+    "CHS": "East Asia",
+    "JPT": "East Asia",
+    "KHV": "East Asia",
+
+    "BEB": "South Asia",
+    "GIH": "South Asia",
+    "ITU": "South Asia",
+    "PJL": "South Asia",
+    "STU": "South Asia"
+}

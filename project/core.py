@@ -4,78 +4,20 @@ import json
 import logging
 import pandas as pd
 import concurrent.futures as ftr
-
-from enum import Enum
 from collections import Counter
 
-import project.utils as utils
+import project.utils.gen as gutils
+import project.utils.plot as putils
+from project.models import GeneType, Gene, GeneGroup, Match, SampleData
+
 from project.settings import FUZZY_IDENTITY_THRESHOLD
 
 logger = logging.getLogger(__name__)
 
 
-class SampleData:
-    def __init__(self, name, url, pop=""):
-        self.name = name
-        self.url = url
-        self.pop = pop
-
-
-class Match:
-    def __init__(self, sample_id, sample_pop, gene_name, match_type, score=None):
-        """
-        Match holds sample matching type and score.
-        Args:
-            sample_id (str): sample name or identifier
-            sample_population (str): sample population 
-            gene_name (str): gene/allele name or identifier
-            match_type (str): characterization of matching (e.g. gene, gene_fuzzy, allele)
-            score (float): 1.0 for complete match (< 1.0 fuzzy match)
-        """
-        self.sample_id = sample_id
-        self.sample_population = sample_pop
-        self.gene_name = gene_name 
-        self.match_type = match_type  
-        self.score = score  # could be frequency %, match % (max: 1.0)
-
-    def to_dict(self):
-        return {
-            "sample_id": self.sample_id,
-            "sample_population": self.sample_population,
-            "gene_name": self.gene_name,
-            "match_type": self.match_type,
-            "score": self.score
-        }
-
-
-class GeneType(Enum):
-    NONE = ""
-    GENE = "GENE"
-    ALLELE = "ALLELE"
-
-
-class GeneData:
+class GeneData(Gene):
     def __init__(self, name, chrom="", start=0, end=0):
-        """
-        GeneData holds genomic region info.
-        Args:
-            name (str): gene name or identifier
-            chrom (str): chromosome name (e.g. 'chr17')
-            start (int): 1-based start position
-            end (int): end position
-        """
-        self.name = name
-        self.chrom = chrom
-        self.start = start
-        self.end = end
-        self.type = GeneType.NONE
-        self.pos = None # if defined it's a gene allele
-        self.seq = "" # nucleotide sequence (len should be end-start)
-        self.tag = "" # some label to group gene-data
-        self.attr = "" # characterization depending on drug response
-        self.comments = "" 
-        # Per sample evaluation 
-        self.match = None # sample match
+        super().__init__(name, chrom, start, end)
 
     @staticmethod
     def create(g:dict, data_dir=""):
@@ -99,17 +41,17 @@ class GeneData:
             if seq_file: # File paths already saved from Entrez 
                 file_path = os.path.join(data_dir, seq_file)
                 if os.path.exists(file_path):
-                    gene.seq = utils.load_gene_sequence(file_path)
+                    gene.seq = gutils.load_gene_sequence(file_path)
                 else:
                     if seq_accession:
-                        gene.seq = utils.get_gene_sequence(seq_accession, gene.start, gene.end)
+                        gene.seq = gutils.get_gene_sequence(seq_accession, gene.start, gene.end)
                         with open(file_path, "w") as file:
                             logger.info(f"Saving sequence locally for: {gene.name}")
                             file.write(gene.seq)
                     else:
                         logger.warning(f"No sequence accession number given for gene: {gene.name}")
             elif seq_accession:
-                gene.seq = utils.get_gene_sequence(seq_accession, gene.start, gene.end)
+                gene.seq = gutils.get_gene_sequence(seq_accession, gene.start, gene.end)
             
         return gene
 
@@ -122,7 +64,7 @@ class GeneData:
         """
         self.match = None # Reset match
         try:
-            bamfile = utils.safe_open_alignment(sample.url, ref_fasta, mode='rc', retries=2, delay=2)
+            bamfile = gutils.safe_open_alignment(sample.url, ref_fasta, mode='rc', retries=2, delay=2)
             logger.info(f"{sample.name}: matching '{self.name}' sequence (size:{len(self.seq)})")
             # Prepare allele check (if self.pos is defined)
             pileup_checked = False
@@ -174,7 +116,7 @@ class GeneData:
                 reconstructed_seq = ''.join(consensus).upper()
                 
                 if len(reconstructed_seq) == len(self.seq):
-                    identity = utils.hamming_identity(reconstructed_seq, self.seq)
+                    identity = gutils.hamming_identity(reconstructed_seq, self.seq)
                     if identity == 1.0:
                         self.match = Match(
                             sample_id=sample.name, 
@@ -193,7 +135,7 @@ class GeneData:
                         )
                 else:
                     logger.warning(f"{self.name} at sample: {sample.name}: sequence lengths don't match (query: {len(self.seq)}, read:{len(reconstructed_seq)}). Using rapidfuzz ratio.")
-                    similarity = utils.fuzz_similarity(reconstructed_seq, self.seq)
+                    similarity = gutils.fuzz_similarity(reconstructed_seq, self.seq)
                     if similarity >= FUZZY_IDENTITY_THRESHOLD:
                         self.match = Match(
                             sample_id=sample.name, 
@@ -223,13 +165,6 @@ class GeneData:
         }
         
 
-class GeneDataGroup:
-    def __init__(self, tag, gene:GeneData, alleles=[]):
-        self.tag = tag
-        self.gene = gene
-        self.alleles = alleles
-
-
 class SampleScanner:
     def __init__(self):
         self.index_file = None
@@ -238,6 +173,7 @@ class SampleScanner:
         self.output_dir_samples = None
         self.output_dir_figures = None
         self.genes_json = None
+        self.pops_json = None
         self.gene_data = []
         self.gene_groups = {}
         self.limit = 0 # sample scan limit (for debug)
@@ -289,7 +225,7 @@ class SampleScanner:
                 tags[allele.tag].append(allele)
             # Group alleles (only) by tag
             for tag, alleles in tags.items():
-                self.gene_groups[tag] = GeneDataGroup(tag, gene, alleles)
+                self.gene_groups[tag] = GeneGroup(tag, gene, alleles)
             
     def process_sample(self, sample_row):
         """
@@ -297,7 +233,7 @@ class SampleScanner:
         """
         sample_name = sample_row["SAMPLE_NAME"]
         sample_pop = sample_row["POPULATION"]
-        sample_url = utils.convert_ftp_to_https(sample_row["ENA_FILE_PATH"])
+        sample_url = gutils.convert_ftp_to_https(sample_row["ENA_FILE_PATH"])
         sample_result = {"sample": sample_name}
         sample = SampleData(name=sample_name, url=sample_url, pop=sample_pop)
         sample_summaries = []
@@ -568,9 +504,19 @@ class SampleScanner:
     
     def plot_figures(self):
         fig_dir = self.output_dir_figures
-        
-        df = pd.read_csv(os.path.join(self.output_dir, "summary_total.csv"))
-        utils.plot_total_summary(df, fig_dir, "total")
+        input_csv = os.path.join(self.output_dir, "summary_total.csv")
+        output_dir = os.path.join(fig_dir, "total")
+        plotter = putils.SumPlotter(input_csv, output_dir, self.pops_json)
+        plotter.plot_allele_heatmap_by_sample("allele_heatmap_by_sample")
+        plotter.plot_allele_heatmap_by_population("allele_heatmap_by_population")
+        plotter.plot_allele_matches_by_population("allele_matches_by_population")
+        plotter.plot_pca_by_population("pca_by_population")
+        plotter.plot_pca_by_continent("pca_by_population_group")
+        plotter.plot_correlation_matrix("correlation_matrix")
+        plotter.plot_match_sum_across_genes("match_sum_across_genes")
+        plotter.plot_metabolizer_by_population("metabolism_by_population")
+        plotter.plot_response_by_population("response_by_population")
+        plotter.plot_response_ratio_by_population("response_ratio_by_population")
         
         skip_tags = ["total", "metabolizers", "responses"]
         for filename in os.listdir(self.output_dir):
@@ -580,5 +526,10 @@ class SampleScanner:
                 tag = os.path.splitext(filename)[0].removeprefix("summary_")
                 if tag in skip_tags:
                     continue
-                df = pd.read_csv(os.path.join(self.output_dir, filename))
-                utils.plot_per_gene_summary(df, fig_dir, tag)
+                output_dir = os.path.join(fig_dir, tag)
+                filepath = os.path.join(self.output_dir, filename)
+                plotter = putils.GeneGroupPlotter(tag, filepath, output_dir, self.pops_json)
+                plotter.plot_heatmap("heatmap")
+                plotter.plot_frequency_distribution("frequency_distribution")
+                plotter.plot_genotype_distribution("genotype_distribution")
+                plotter.plot_phenotype_distribution("phenotype_distribution")

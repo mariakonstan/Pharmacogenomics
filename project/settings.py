@@ -18,8 +18,10 @@ FASTA_URLS = [
 
 # Setup Input  
 FASTA_FILE = f"{FASTA_DIR}/{FASTA_NAME}.fa" # Reference FASTA path
-GENES_JSON = BASE_DIR / "data/sequences/index.json" # Path to gene/allele JSON definition
-SAMPLE_INDEX = BASE_DIR / "data/samples.index" # Sample index file (TSV)
+DATA_DIR = BASE_DIR / "data" # Input directory
+GENES_JSON = DATA_DIR / "sequences/index.json" # Path to gene/allele JSON definition
+SAMPLE_INDEX = DATA_DIR / "samples.index" # Sample index file (TSV)
+POPULATIONS_JSON = DATA_DIR / "populations.json" # Path to population groups json
 
 # Setup Output  
 OUTPUT_DIR = BASE_DIR / "results" # Output directory

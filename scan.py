@@ -1,5 +1,5 @@
 from project.core import SampleScanner
-from project.utils import download_fasta
+from project.utils.gen import download_fasta
 import project.settings as settings 
 
 
